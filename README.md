@@ -21,9 +21,15 @@
   pnpm install
 ```
 
-## 2. Migrate database
+## 2. Build
 
-### 2.1. Create migration file
+```bash
+    pnpm build
+```
+
+## 3. Migrate database
+
+### 3.1. Create migration file
 
 ```bash
   # Generate a migration script based on entities (recommended)
@@ -34,20 +40,19 @@
   
 ```
 
-### 2.2. Migrate
+### 3.2. Migrate
 
 ```bash
-  pnpm build
   pnpm migration:up
 ```
 
-### 2.3. Revert
+### 3.3. Revert
 
 ```bash
   pnpm migration:down
 ```
 
-## 3. Running the app
+## 4. Running the app
 
 ```bash
 # development
@@ -68,6 +73,7 @@ $ pnpm start:prod
   docker compose up -d
   docker compose exec node npm i -g @nestjs/cli
   docker compose exec node pnpm install
+  docker compose exec node pnpm build
 ```
 
 ## 3. Migrate database
@@ -92,4 +98,4 @@ $ pnpm start:prod
 
 ### 5. Local url
 
-http://localhost:31004
+http://localhost:`APP_PORT`
