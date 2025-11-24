@@ -1,0 +1,14 @@
+services:
+  redis:
+    image: redis:8.0-rc1-alpine
+    container_name: redis
+    restart: unless-stopped
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: redisinsight
+    restart: unless-stopped
+
+    environment:
+      RI_REDIS_HOST: redis
+      RI_REDIS_PORT: '6379'

@@ -1,0 +1,74 @@
+services:
+  node:
+    build:
+      context: .
+      dockerfile: .docker/compose/nodejs/Dockerfile.local
+    container_name: nest_starter_node
+    extends:
+      file: .docker/compose/nodejs/node.yml
+      service: node
+    volumes:
+      - ${PWD}:/work
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+    depends_on:
+      - db
+    networks:
+      - nest-starter-network
+    env_file:
+      - .env
+
+  db:
+    container_name: nest_starter_user_db
+    extends:
+      file: .docker/compose/postgresql/postgresql.yml
+      service: postgresql
+    ports:
+      - '5536:5432'
+    volumes:
+      - ${PWD}/.docker/volumes/pg_data:/var/lib/postgresql/data
+    networks:
+      - nest-starter-network
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    env_file:
+      - .env
+
+  redis:
+    container_name: nest_starter_redis
+    extends:
+      file: .docker/compose/redis/redis.yml
+      service: redis
+    ports:
+      - '6376:6379'
+    networks:
+      - nest-starter-network
+    volumes:
+      - ${PWD}/.docker/volumes/redis_data:/data
+    command: redis-server --appendonly yes --dir /data
+
+  redisinsight:
+    container_name: nest_starter_redisinsight
+    extends:
+      file: .docker/compose/redis/redis.yml
+      service: redisinsight
+    depends_on:
+      - redis
+    volumes:
+      - ${PWD}/.docker/volumes/redisinsight_data:/db
+    ports:
+      - '5546:5540'
+    links:
+      - redis
+    networks:
+      - nest-starter-network
+
+volumes:
+  redisinsight_data:
+  pg_data:
+  redis_data:
+
+networks:
+  nest-starter-network:

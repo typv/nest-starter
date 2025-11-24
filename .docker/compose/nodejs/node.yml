@@ -1,0 +1,8 @@
+services:
+  node:
+    container_name: node
+    tty: true
+    environment:
+      - HOST=0.0.0.0
+    working_dir: /work
+    restart: unless-stopped
