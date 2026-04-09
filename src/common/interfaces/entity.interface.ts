@@ -1,6 +1,5 @@
-import { EntityManager } from '@mikro-orm/core';
-import { EntityData, EntityName } from '@mikro-orm/core/typings';
-import { ApiAction } from '../enums';
+import { EntityData, EntityManager, EntityName } from "@mikro-orm/core";
+import { ApiAction } from "../enums";
 
 export interface BaseEntityMutation {
   id?: string;
