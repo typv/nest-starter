@@ -28,3 +28,5 @@ prod:
 	docker compose exec node pnpm start:prod
 runCommand:
 	docker compose exec node pnpm command:run $(c)
+checkTypes:
+	docker compose exec node pnpm check-types
